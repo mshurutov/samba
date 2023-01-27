@@ -1,2 +1,24 @@
 ---
+
 # tasks file for samba
+- name: install samba services
+  ansible.builtin.include_tasks: "{{ ansible_pkg_mgr }}.yml"
+  tags: samba_install
+
+- name: set samba_config_params parameter
+  set_fact:
+    samba_config_params: "{{ samba_config_params_default | community.general.lists_mergeby(samba_config_params_group_all | default([]),samba_config_params_group | default([]),samba_config_params_host | default([]), 'name', recursive=true) }}"
+- name: config samba
+  ansible.builtin.template:
+    src: "{{ samba_templates_dir }}/smb.conf.j2"
+    dest: "{{ samba_config_file }}"
+    validate: "testparm -s %s"
+
+- name: enable and start samba after configure
+  ansible.builtin.service:
+    name: "{{ item }}"
+    enabled: true
+    state: "restarted"
+  loop: "{{ samba_services }}"
+  when: samba_is_server is defined and samba_is_server | bool
+

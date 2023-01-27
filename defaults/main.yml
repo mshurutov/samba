@@ -1,2 +1,35 @@
 ---
+
 # defaults file for samba
+samba_templates_dir: "{{ role_path }}/templates"
+samba_config_dir: "/etc/samba"
+samba_config_file: "{{ samba_config_dir }}/smb.conf"
+samba_packages:
+  - "net-fs/samba"
+  - "net-fs/cifs-utils"
+samba_services:
+  - "smbd"
+samba_config_params_default:
+  - name: "00_global"
+    options:
+      workgroup: "MYSMBGROUP"
+      server_string: "Samba host"
+      server_role: "standalone server"
+      log_file: "/var/log/samba/log.%m"
+      disable_netbios: "yes"
+      dns_proxy: "no"
+  - name: "01_homes"
+    options:
+      comment: "Home Directories"
+      browseable: "no"
+      writable: "yes"
+  - name: "02_printers"
+    options:
+      comment: "All Printers"
+      path: "/var/spool/samba"
+      browseable: "yes"
+      public: "yes"
+      guest_ok: "yes"
+      writable: "no"
+      printable: "yes"
+

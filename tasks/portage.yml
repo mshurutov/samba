@@ -1,0 +1,8 @@
+---
+
+# install samba on Gentoo Linux
+- name: install samba on Gentoo Linux
+  community.general.portage:
+    package: "{{ samba_packages }}"
+    state: present
+  tags: samba_install

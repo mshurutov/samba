@@ -32,4 +32,3 @@ samba_config_params_default:
       guest_ok: "yes"
       writable: "no"
       printable: "yes"
-

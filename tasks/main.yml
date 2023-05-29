@@ -21,4 +21,3 @@
     state: "restarted"
   loop: "{{ samba_services }}"
   when: samba_is_server is defined and samba_is_server | bool
-

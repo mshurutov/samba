@@ -36,4 +36,3 @@
     name: "{{ item }}"
     state: "reloaded"
   loop: "{{ samba_services }}"
-

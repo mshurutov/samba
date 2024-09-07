@@ -1,2 +1,8 @@
 ---
 # vars file for samba
+samba_config_params: "{{
+  samba_config_params_default |
+  community.general.lists_mergeby(samba_config_params_group_all | default([]),
+    samba_config_params_group | default([]),
+    samba_config_params_host | default([]), 'name', recursive=true)
+}}"

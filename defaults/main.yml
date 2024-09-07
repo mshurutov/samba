@@ -1,7 +1,7 @@
 ---
-
 # defaults file for samba
 samba_templates_dir: "{{ role_path }}/templates"
+samba_vars_dir: "{{ role_path }}/vars"
 samba_config_dir: "/etc/samba"
 samba_config_file: "{{ samba_config_dir }}/smb.conf"
 samba_packages:

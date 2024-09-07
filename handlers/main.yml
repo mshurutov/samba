@@ -1,37 +1,36 @@
 ---
-
 # handlers file for samba
-- name: enable samba
+- name: Enable samba
   ansible.builtin.service:
     name: "{{ item }}"
     enabled: true
   loop: "{{ samba_services }}"
 
-- name: disable samba
+- name: Disable samba
   ansible.builtin.service:
     name: "{{ item }}"
     enabled: false
   loop: "{{ samba_services }}"
 
-- name: start samba
+- name: Start samba
   ansible.builtin.service:
     name: "{{ item }}"
     state: "started"
   loop: "{{ samba_services }}"
 
-- name: stop samba
+- name: Stop samba
   ansible.builtin.service:
     name: "{{ item }}"
     state: "stopped"
   loop: "{{ samba_services }}"
 
-- name: restart samba
+- name: Restart samba
   ansible.builtin.service:
     name: "{{ item }}"
     state: "restarted"
   loop: "{{ samba_services }}"
 
-- name: reload samba
+- name: Reload samba
   ansible.builtin.service:
     name: "{{ item }}"
     state: "reloaded"

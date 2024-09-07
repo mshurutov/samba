@@ -11,16 +11,20 @@
 
 # tasks file for samba
 - name: Install samba services
-  ansible.builtin.include_tasks: "{{ ansible_pkg_mgr }}.yml"
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ samba_packages }}"
   tags: samba_install
 
 - name: Set samba_config_params parameter
-  set_fact:
-    samba_config_params: "{{ samba_config_params_default | community.general.lists_mergeby(samba_config_params_group_all | default([]),samba_config_params_group | default([]),samba_config_params_host | default([]), 'name', recursive=true) }}"
+  ansible.builtin.include_vars: "{{ samba_vars_dir }}/main.yml"
+
 - name: Config samba
   ansible.builtin.template:
     src: "{{ samba_templates_dir }}/smb.conf.j2"
     dest: "{{ samba_config_file }}"
+    mode: "0644"
     validate: "testparm -s %s"
 
 - name: Enable and start samba after configure
